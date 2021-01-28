@@ -2,8 +2,6 @@
 globals [
   environment   ; environmental condition affecting the fitness
                 ; of actions
-  p-transition0   ; probability of transition 1 -> 0
-  p-transition1   ; probability of transition 0 -> 1
   mortality-low   ; mortality rate of agents taking the adaptive action for
                   ; the current environment
   mortality-high  ; mortality rate of agents taking the non-adaptive action for
@@ -30,15 +28,13 @@ to setup
 
   ;; Initialize globals
   set environment random 2
-  set p-transition0 0.1
-  set p-transition1 0.1
   set mortality-low 0.05
   set mortality-high 0.2
   set mutation 0.01
 
   ;; Create the initial population
   crt population [
-    set p-conform random-float 1
+    set p-conform ifelse-value (conform-fixation? = true) [1] [random-float 1]
     set conform? ifelse-value (random-float 1 < p-conform) [1] [0]
     set action random 2
   ]
@@ -57,8 +53,11 @@ to go
   ;; Turtles update their action based on the actions of others.
   ask turtles [
     act
-    perish
   ]
+
+  ;; Kill a proportion of turtles taking each action determined by
+  ;; the mortality rate.
+  kill
 
   ;; Random surviving turtles reproduce until the population reaches
   ;; its original size.
@@ -72,7 +71,15 @@ end
 ;; Stansition between environmental states according to the
 ;; transition probabilities.
 to update-environment
-  ;;;
+  ifelse environment = 0 [   ; environment 1
+    if random-float 1 < p-transition [
+      set environment 1
+    ]
+  ] [   ; environment 0
+    if random-float 1 < p-transition [
+      set environment 0
+    ]
+  ]
 end
 
 
@@ -105,13 +112,20 @@ end
 
 
 
-;; Die with a probability determined by the current action and
-;; environmental conditions.
-to perish
-  ifelse action + environment = 1 [   ; if action doesn't match environment
-    if random-float 1 < mortality-high [die]
-  ] [   ; if action matches environment
-    if random-float 1 < mortality-low [die]
+;; Kill a proportion of turtles taking each action determined by
+;; the mortality rate parameters.
+to kill
+  ;; Count the current number of turtles taking each action
+  let count0 count turtles with [action = 0]
+  let count1 count turtles with [action = 1]
+
+  ;; Kill the appropriate number of turtles.
+  ifelse environment = 0 [   ; in environment 0
+    ask n-of (count0 * mortality-low) turtles with [action = 0] [die]
+    ask n-of (count1 * mortality-high) turtles with [action = 1] [die]
+  ] [
+    ask n-of (count0 * mortality-high) turtles with [action = 0] [die]
+    ask n-of (count1 * mortality-low) turtles with [action = 1] [die]
   ]
 end
 
@@ -120,7 +134,7 @@ end
 ;; Random surviving turtles reproduce until the population reaches
 ;; its original size.
 to reproduce
-  while [count turtles < population] [
+  while [count turtles > 0 and count turtles < population] [
     ask one-of turtles [
       hatch 1 [
         set p-conform constrain (p-conform + random-normal 0 mutation) 0 1
@@ -144,10 +158,10 @@ to-report constrain [num lower upper]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-15
-495
-103
-584
+1405
+525
+1493
+614
 -1
 -1
 2.424242424242425
@@ -222,10 +236,10 @@ NIL
 1
 
 PLOT
-600
-15
-950
-245
+240
+280
+590
+535
 Proportion Action 1 over Time
 Time
 Proportion Action 1
@@ -240,10 +254,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot mean [action] of turtles"
 
 PLOT
-240
+600
 15
-590
-245
+950
+270
 Conformity over Time
 Time
 Proportion Conformists
@@ -280,25 +294,25 @@ SLIDER
 sample-size
 sample-size
 1
-10
-5.0
+50
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-960
-15
-1310
-245
+600
+280
+950
+535
 Environmental Conditions over Time
 Time
 Environmental Condition
 0.0
 10.0
--0.2
-1.2
+-0.1
+1.1
 true
 false
 "" ""
@@ -307,21 +321,47 @@ PENS
 
 PLOT
 240
-260
+15
 590
-490
-Population over Time
+270
+Offspring Conformity over Time
 Time
-Population Size
+Mean Probability of Offspring Conformity
 0.0
 10.0
 0.0
-10.0
+1.0
 true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count turtles"
+"default" 1.0 0 -16777216 true "" "plot mean [p-conform] of turtles"
+
+SLIDER
+15
+150
+225
+183
+p-transition
+p-transition
+0
+1
+0.05
+0.01
+1
+NIL
+HORIZONTAL
+
+SWITCH
+15
+195
+225
+228
+conform-fixation?
+conform-fixation?
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
