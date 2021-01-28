@@ -25,12 +25,12 @@ wk.dir <- getwd()
 # ---- libraries ----
 
 # Install libraries needed for the project.
-install.packages("ggplot2")
+# install.packages("ggplot2")
 ###
 ###
 
 # Load the libraries needed for the project to run.
-###
+library(ggplot2)
 ###
 ###
 

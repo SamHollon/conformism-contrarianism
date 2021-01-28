@@ -19,3 +19,54 @@ TransitionData <- read.csv(paste(PathData,
 # =============================================================================
 # --- mean conformity vs. probability of environmental transition ---
 
+# Scatter plot of mean probability of conformity at the end of the simulation
+# (time step 7500) vs. the environmental transition probability. The probability
+# of conformity began at 1 (i.e., fixation) and contrarians later invaded.
+ggplot(TransitionData, aes(x = p.transition,
+                            y = mean.p.conform)) +
+  geom_point(col = "grey") +
+  geom_smooth(method = "lm",
+              formula = "y ~ x",
+              se = F,
+              col = "black") +
+  xlab("Environmental Transition Probability") +
+  ylab("Mean Probability of Conformity") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "grey99",
+                                        colour = "grey80"),
+        plot.title = element_text(hjust = 0.5))
+
+
+# R^2 = 0.7863903.
+cor(TransitionData$mean.p.conform, TransitionData$p.transition)^2
+
+
+
+# =============================================================================
+# --- sd conformity vs. probability of environmental transition ---
+
+# Scatter plot of standard deviation in probability of conformity at the end of
+# the simulation (time step 7500) vs. the environmental transition probability.
+# The probability of conformity began at 1 (i.e., fixation) and contrarians
+# later invaded.
+ggplot(TransitionData, aes(x = p.transition,
+                           y = sqrt(var.p.conform))) +
+  geom_point(col = "grey") +
+  geom_smooth(method = "lm",
+              formula = "y ~ x",
+              se = F,
+              col = "black") +
+  xlab("Environmental Transition Probability") +
+  ylab("Mean Probability of Conformity") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "grey99",
+                                        colour = "grey80"),
+        plot.title = element_text(hjust = 0.5))
+
+
+# R^2 = 0.02626618
+cor(sqrt(TransitionData$var.p.conform), TransitionData$p.transition)^2

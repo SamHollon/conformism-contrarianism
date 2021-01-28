@@ -347,7 +347,7 @@ p-transition
 p-transition
 0
 1
-0.1
+0.25
 0.01
 1
 NIL
@@ -360,7 +360,7 @@ SWITCH
 208
 conform-fixation?
 conform-fixation?
-1
+0
 1
 -1000
 
@@ -753,6 +753,23 @@ NetLogo 6.1.1
     <enumeratedValueSet variable="sample-size">
       <value value="25"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="population">
+      <value value="1000"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Invasion_ConformBySampleSize" repetitions="4" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="7500"/>
+    <metric>mean [p-conform] of turtles</metric>
+    <metric>variance [p-conform] of turtles</metric>
+    <enumeratedValueSet variable="p-transition">
+      <value value="0.25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="conform-fixation?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="sample-size" first="5" step="5" last="50"/>
     <enumeratedValueSet variable="population">
       <value value="1000"/>
     </enumeratedValueSet>
