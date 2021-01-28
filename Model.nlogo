@@ -185,9 +185,9 @@ ticks
 30.0
 
 BUTTON
-160
+155
 15
-223
+218
 48
 go
 go
@@ -202,9 +202,9 @@ NIL
 1
 
 BUTTON
-90
+85
 15
-153
+148
 48
 step
 go
@@ -236,9 +236,9 @@ NIL
 1
 
 PLOT
-240
+230
 280
-590
+580
 535
 Proportion Action 1 over Time
 Time
@@ -254,9 +254,9 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot mean [action] of turtles"
 
 PLOT
-600
+590
 15
-950
+940
 270
 Conformity over Time
 Time
@@ -273,9 +273,9 @@ PENS
 
 SLIDER
 15
-60
-225
-93
+55
+220
+88
 population
 population
 100
@@ -288,9 +288,9 @@ HORIZONTAL
 
 SLIDER
 15
-105
-225
-138
+95
+220
+128
 sample-size
 sample-size
 1
@@ -302,9 +302,9 @@ NIL
 HORIZONTAL
 
 PLOT
-600
+590
 280
-950
+940
 535
 Environmental Conditions over Time
 Time
@@ -320,9 +320,9 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot environment"
 
 PLOT
-240
+230
 15
-590
+580
 270
 Offspring Conformity over Time
 Time
@@ -339,14 +339,14 @@ PENS
 
 SLIDER
 15
-150
-225
-183
+135
+220
+168
 p-transition
 p-transition
 0
 1
-0.05
+0.5
 0.01
 1
 NIL
@@ -354,9 +354,9 @@ HORIZONTAL
 
 SWITCH
 15
-195
-225
-228
+175
+220
+208
 conform-fixation?
 conform-fixation?
 0
@@ -709,6 +709,37 @@ NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="Experiment0" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="2000"/>
+    <metric>mean [p-conform] of turtles</metric>
+    <metric>mean [conform?] of turtles</metric>
+    <metric>mean [action] of turtles</metric>
+    <metric>environment</metric>
+    <enumeratedValueSet variable="p-transition">
+      <value value="0"/>
+      <value value="0.01"/>
+      <value value="0.05"/>
+      <value value="0.25"/>
+      <value value="0.5"/>
+      <value value="0.75"/>
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="conform-fixation?">
+      <value value="true"/>
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sample-size">
+      <value value="5"/>
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="population">
+      <value value="1000"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
