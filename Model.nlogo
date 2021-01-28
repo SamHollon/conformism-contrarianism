@@ -326,16 +326,17 @@ PLOT
 270
 Offspring Conformity over Time
 Time
-Mean Probability of Offspring Conformity
+Probability of Offspring Conformity
 0.0
 10.0
 0.0
 1.0
 true
-false
+true
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot mean [p-conform] of turtles"
+"Mean" 1.0 0 -16777216 true "" "plot mean [p-conform] of turtles"
+"Variance" 1.0 0 -2674135 true "" "plot variance [p-conform] of turtles"
 
 SLIDER
 15
@@ -346,7 +347,7 @@ p-transition
 p-transition
 0
 1
-0.5
+0.1
 0.01
 1
 NIL
@@ -359,7 +360,7 @@ SWITCH
 208
 conform-fixation?
 conform-fixation?
-0
+1
 1
 -1000
 
@@ -734,6 +735,23 @@ NetLogo 6.1.1
     <enumeratedValueSet variable="sample-size">
       <value value="5"/>
       <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="population">
+      <value value="1000"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Invasion_ConformByPTransition" repetitions="4" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="7500"/>
+    <metric>mean [p-conform] of turtles</metric>
+    <metric>variance [p-conform] of turtles</metric>
+    <steppedValueSet variable="p-transition" first="0" step="0.1" last="1"/>
+    <enumeratedValueSet variable="conform-fixation?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sample-size">
+      <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="population">
       <value value="1000"/>

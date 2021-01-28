@@ -1,16 +1,16 @@
+#
+#
+# MAIN
+# The main project file. Run this before running other scripts in the project.
+#
+#
+
+
+
 # =============================================================================
 # --- version ---
 
 R.version.string  # "R version 4.0.3 (2020-10-10)"
-
-
-
-# =============================================================================
-# --- notes ---
-
-###
-###
-###
 
 
 
@@ -25,7 +25,7 @@ wk.dir <- getwd()
 # ---- libraries ----
 
 # Install libraries needed for the project.
-###
+install.packages("ggplot2")
 ###
 ###
 
@@ -40,7 +40,7 @@ wk.dir <- getwd()
 # --- folder management ---
 
 # Store names of the project folders.
-folder.names <- c("1.RawData","2.CleanData", "3.Results","4.Figures")
+folder.names <- c("1.Data", "2.Results","3.Figures")
 
 # Create each folder if it doesn't already exist.
 for(i in 1:length(folder.names)){ 
@@ -50,10 +50,9 @@ for(i in 1:length(folder.names)){
 }
 
 # Store the file path to each folder.
-PathDataRaw <- paste(wk.dir, "/", folder.names[1], "/", sep = "")
-PathDataClean <- paste(wk.dir, "/", folder.names[2], "/", sep = "")
-PathResults <- paste(wk.dir, "/", folder.names[3], "/", sep = "")
-PathFigures <- paste(wk.dir, "/", folder.names[4], "/", sep = "")
+PathData <- paste(wk.dir, "/", folder.names[1], "/", sep = "")
+PathResults <- paste(wk.dir, "/", folder.names[2], "/", sep = "")
+PathFigures <- paste(wk.dir, "/", folder.names[3], "/", sep = "")
 
 
 

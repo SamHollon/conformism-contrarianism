@@ -1,4 +1,4 @@
-run.number,step,p.transition,conform.fixation?,sample.size,population,mean.p.conform,mean.conform,mean.action,environment
+run.number,step,p.transition,conform.fixation,sample.size,population,mean.p.conform,mean.conform,mean.action,environment
 1,0,0,TRUE,5,1000,1,1,0.518,1
 1,1,0,TRUE,5,1000,0.999684053,1,0.663,1
 1,2,0,TRUE,5,1000,0.999406685,1,0.875,1
