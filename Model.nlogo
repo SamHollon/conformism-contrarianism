@@ -314,7 +314,7 @@ sample-size
 sample-size
 1
 50
-5.0
+50.0
 1
 1
 NIL
@@ -768,26 +768,28 @@ NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="Experiment0" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="FullRuns" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="2000"/>
     <metric>mean [p-conform] of turtles</metric>
     <metric>mean [conform?] of turtles</metric>
     <metric>mean [action] of turtles</metric>
+    <metric>conformist-mortality</metric>
+    <metric>contrarian-mortality</metric>
     <metric>environment</metric>
     <enumeratedValueSet variable="p-transition">
-      <value value="0"/>
       <value value="0.01"/>
+      <value value="0.02"/>
+      <value value="0.03"/>
+      <value value="0.04"/>
       <value value="0.05"/>
-      <value value="0.25"/>
-      <value value="0.5"/>
-      <value value="0.75"/>
-      <value value="1"/>
+      <value value="0.1"/>
+      <value value="0.2"/>
+      <value value="0.3"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="conform-fixation?">
       <value value="true"/>
-      <value value="false"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="sample-size">
       <value value="5"/>
