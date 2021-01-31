@@ -40,7 +40,7 @@ library(ggplot2)
 # --- folder management ---
 
 # Store names of the project folders.
-folder.names <- c("1.Data", "2.Results","3.Figures")
+folder.names <- c("1.Data","2.Figures")
 
 # Create each folder if it doesn't already exist.
 for(i in 1:length(folder.names)){ 
@@ -51,17 +51,14 @@ for(i in 1:length(folder.names)){
 
 # Store the file path to each folder.
 PathData <- paste(wk.dir, "/", folder.names[1], "/", sep = "")
-PathResults <- paste(wk.dir, "/", folder.names[2], "/", sep = "")
-PathFigures <- paste(wk.dir, "/", folder.names[3], "/", sep = "")
+PathFigures <- paste(wk.dir, "/", folder.names[2], "/", sep = "")
 
 
 
 # =============================================================================
 # --- run scripts ---
 
-###
-###
-###
+source("Functions.R")
 
 
 

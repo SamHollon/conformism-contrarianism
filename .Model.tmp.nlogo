@@ -855,11 +855,8 @@ NetLogo 6.1.1
     <metric>mean [p-conform] of turtles</metric>
     <metric>variance [p-conform] of turtles</metric>
     <steppedValueSet variable="p-transition" first="0" step="0.1" last="1"/>
-    <enumeratedValueSet variable="init-prop?">
+    <enumeratedValueSet variable="conform-fixation?">
       <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="init-prop-conform">
-      <value value="1"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="sample-size">
       <value value="25"/>
@@ -877,11 +874,8 @@ NetLogo 6.1.1
     <enumeratedValueSet variable="p-transition">
       <value value="0.25"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="init-prop?">
+    <enumeratedValueSet variable="conform-fixation?">
       <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="init-prop-conform">
-      <value value="1"/>
     </enumeratedValueSet>
     <steppedValueSet variable="sample-size" first="5" step="5" last="50"/>
     <enumeratedValueSet variable="population">

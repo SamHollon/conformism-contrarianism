@@ -10,9 +10,7 @@
 # =============================================================================
 # --- load data ---
 
-TimeData <- read.csv(paste(PathData,
-                           "FullRuns.csv",
-                           sep = ""))
+TimeData <- read.csv(paste(PathData, "FullRuns.csv", sep = ""))
 
 
 
@@ -44,14 +42,12 @@ for (i in unique(TimeData$run.number)) {
           axis.ticks = element_blank(),
           panel.background = element_rect(fill = "white",
                                           color = "white"),
-          plot.title = element_text(hjust = 0.5),
           legend.position = "none",
           plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "in"))
   
   # Save Image
   ggsave(paste(PathFigures, "Run", i , ".png", sep = ""),
-         height = 4,
-         width = 6)
+         height = 4, width = 6)
   print(run.plot)
   dev.off()
 }
@@ -85,14 +81,12 @@ for (i in unique(TimeData$run.number)) {
           axis.ticks = element_blank(),
           panel.background = element_rect(fill = "white",
                                           color = "white"),
-          plot.title = element_text(hjust = 0.5),
           legend.position = "none",
           plot.margin = unit(c(0.25, 0.25, 0.25, 0.25), "in"))
   
   # Save Image
   ggsave(paste(PathFigures, "Mortality", i , ".png", sep = ""),
-         height = 4,
-         width = 6)
+         height = 4, width = 6)
   print(run.plot)
   dev.off()
 }
