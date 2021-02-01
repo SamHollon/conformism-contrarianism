@@ -11,19 +11,19 @@
 # --- load data ---
 
 TransitionData <- read.csv(paste(PathData,
-                                 "Invasion_ConformByPTransition.csv",
-                                 sep = ""))
-SampleSizeData <- read.csv(paste(PathData,
-                                 "Invasion_ConformBySampleSize.csv",
+                                 "ConformByPTransition.csv",
                                  sep = ""))
 TimeData <- read.csv(paste(PathData,
                            "FullRuns.csv",
                            sep = ""))
+MortalityData <- read.csv(paste(PathData,
+                                "Mortality.csv",
+                                sep = ""))
 
 
 
 # =============================================================================
-# --- mean conformity vs. probability of environmental transition ---
+# --- conformity vs. probability of environmental transition ---
 
 # Scatter plot of mean probability of conformity at the end of the simulation
 # (time step 7500) vs. the environmental transition probability. The probability
@@ -46,103 +46,13 @@ mean.conform.vs.transition <- ggplot(TransitionData,
 # R^2 = 0.8394212.
 cor(TransitionData$mean.p.conform, TransitionData$p.transition)^2
 
+# Regression line equation: y = 0.9181 - 0.8342x
+lm(mean.p.conform ~ p.transition, TransitionData)
 
-
-# =============================================================================
-# --- sd conformity vs. probability of environmental transition ---
-
-# Scatter plot of standard deviation in probability of conformity at the end of
-# the simulation (time step 7500) vs. the environmental transition probability.
-# The probability of conformity began at 1 (i.e., fixation), and contrarians
-# later invaded.
-sd.conform.vs.transition <- ggplot(TransitionData,
-                                   aes(x = p.transition,
-                                       y = sqrt(var.p.conform))) +
-  geom_point(col = "grey") +
-  geom_smooth(method = "loess",
-              formula = "y ~ x",
-              se = F,
-              col = "black") +
-  xlab("Environmental Transition Probability") +
-  ylab("SD Probability of Conformity") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.ticks = element_blank(),
-        panel.background = element_rect(fill = "grey99", colour = "grey80"))
-
-
-
-# =============================================================================
-# --- mean conformity vs. sample size ---
-
-# Scatter plot of mean probability of conformity at the end of the simulation
-# (time step 7500) vs. individuals' sample size. The probability of conformity
-# began at 1 (i.e., fixation), and contrarians later invaded.
-mean.conform.vs.sample.size <- ggplot(SampleSizeData,
-                                      aes(x = sample.size,
-                                          y = mean.p.conform)) +
-  geom_point(col = "grey") +
-  geom_smooth(method = "lm",
-              formula = "y ~ x",
-              se = F,
-              col = "black") +
-  xlab("Sample Size") +
-  ylab("Mean Probability of Conformity") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.ticks = element_blank(),
-        panel.background = element_rect(fill = "grey99", colour = "grey80"))
-
-
-# R^2 = 0.2742303.
-cor(SampleSizeData$mean.p.conform, SampleSizeData$sample.size)^2
-
-
-
-# =============================================================================
-# --- sd conformity vs. sample size ---
-
-# Scatter plot of standard deviation in probability of conformity at the end of
-# the simulation (time step 7500) vs. individuals' sample size. The probability
-# of conformity began at 1 (i.e., fixation), and contrarians later invaded.
-sd.conform.vs.sample.size <- ggplot(SampleSizeData,
-                                    aes(x = sample.size,
-                                        y = sqrt(var.p.conform))) +
-  geom_point(col = "grey") +
-  geom_smooth(method = "lm",
-              formula = "y ~ x",
-              se = F,
-              col = "black") +
-  xlab("Sample Size") +
-  ylab("SD Probability of Conformity") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.ticks = element_blank(),
-        panel.background = element_rect(fill = "grey99", colour = "grey80"))
-
-
-
-# =============================================================================
-# --- save scatter plots ---
-
-ggsave(paste(PathFigures, "MeanConformVsTransition", i , ".png", sep = ""),
-    height = 4, width = 6)
+# Save scatter plot
+ggsave(paste(PathFigures, "MeanConformVsTransition.png", sep = ""),
+       height = 4, width = 6.5)
 print(mean.conform.vs.transition)
-dev.off()
-
-ggsave(paste(PathFigures, "SDConformVsTransition", i , ".png", sep = ""),
-    height = 4, width = 6)
-print(sd.conform.vs.transition)
-dev.off()
-
-ggsave(paste(PathFigures, "MeanConformVsSampleSize.png", sep = ""),
-    height = 4, width = 6)
-print(mean.conform.vs.sample.size)
-dev.off()
-
-ggsave(paste(PathFigures, "SDConformVsSampleSize.png", sep = ""),
-    height = 4, width = 6)
-print(sd.conform.vs.sample.size)
 dev.off()
 
 
@@ -150,25 +60,49 @@ dev.off()
 # =============================================================================
 # --- mortality by social type ---
 
-# Prepare data for histograms.
-conformist.mortality <- TimeData$conformist.mortality
-contrarian.mortality <- TimeData$contrarian.mortality
+# Get the mean of each variable for each run.
+avg.mort <- aggregate(MortalityData, by = list(MortalityData$run), mean,
+                      na.rm = T)
+
+# Create a tidy data frame of mortality rates for both social types by run.
+# and transition probability.
+tidy.mort <- data.frame("run.number" = avg.mort$run.number,
+                        "type" = "conformist",
+                        "p.transition" = avg.mort$p.transition,
+                        "mortality" = avg.mort$conformist.mortality)
+tidy.mort <- rbind(tidy.mort,
+                   data.frame("run.number" = avg.mort$run.number,
+                              "type" = "contrarian",
+                              "p.transition" = avg.mort$p.transition,
+                              "mortality" = avg.mort$contrarian.mortality))
+
+# Create labeller for transition probabilities.
+transition.labs <- c(`0.01` = "T = 0.01",
+                     `0.25` = "T = 0.25",
+                     `0.75` = "T = 0.75")
+
+# Create jittered strip plots comparing mortality between the two groups
+# for each transition probability.
+mort.plot <- ggplot(tidy.mort, aes(x = type, y = mortality)) +
+  geom_jitter() +
+  facet_grid(~ p.transition, labeller = as_labeller(transition.labs)) +
+  ylab("Time-Average Mortality Rate") +
+  theme_light() +
+  theme(panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        strip.text = element_text(color = "black"),
+        strip.background = element_rect(fill = "grey90", color = "darkgrey"))
+
 
 # Start PNG
-png(paste(PathFigures, "MortalityBySocialType.png", sep = ""),
-    height = 7, width = 6, units = "in", res = 300)
+ggsave(paste(PathFigures, "MortalityBySocialType.png", sep = ""),
+       height = 4, width = 6.5)
 
-# Create a plot area with two rows and one column.
-par(mfrow = c(2,1))
+# Add the plot to the PNG
+print(mort.plot)
 
-# Create histograms of mortality by social type.
-mort.conformists <- hist(remove.outliers(conformist.mortality, dst = 0.5),
-                         freq = F, xlim = c(0, 0.25), breaks = 12, las = 1,
-                         main = "Conformists", xlab = "Mortality Rate",
-                         ylab = "Probability Density", col = "grey80")
-mort.contrarians <- hist(remove.outliers(contrarian.mortality, dst = 0.5),
-                         freq = F, xlim = c(0, 0.25), breaks = 12, las = 1,
-                         main = "Contrarians", xlab = "Mortality Rate",
-                         ylab = "Probability Density", col = "grey80")
-# End PNG
+# END PNG
 dev.off()
+
+

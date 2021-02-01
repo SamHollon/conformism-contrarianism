@@ -26,11 +26,13 @@ wk.dir <- getwd()
 
 # Install libraries needed for the project.
 # install.packages("ggplot2")
+# install.packages("gridExtra")
 ###
 ###
 
 # Load the libraries needed for the project to run.
 library(ggplot2)
+library(gridExtra)
 ###
 ###
 

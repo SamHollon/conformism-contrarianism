@@ -382,7 +382,7 @@ p-transition
 p-transition
 0
 1
-0.01
+0.75
 0.01
 1
 NIL
@@ -395,7 +395,7 @@ SWITCH
 248
 init-prop?
 init-prop?
-1
+0
 1
 -1000
 
@@ -844,11 +844,14 @@ NetLogo 6.1.1
       <value value="5"/>
       <value value="50"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation">
+      <value value="0.01"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="population">
       <value value="1000"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Invasion_ConformByPTransition" repetitions="14" runMetricsEveryStep="false">
+  <experiment name="ConformByPTransition" repetitions="14" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="7500"/>
@@ -864,18 +867,27 @@ NetLogo 6.1.1
     <enumeratedValueSet variable="sample-size">
       <value value="25"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation">
+      <value value="0.01"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="population">
       <value value="1000"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Invasion_ConformBySampleSize" repetitions="4" runMetricsEveryStep="false">
+  <experiment name="Mortality" repetitions="15" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="7500"/>
     <metric>mean [p-conform] of turtles</metric>
-    <metric>variance [p-conform] of turtles</metric>
+    <metric>mean [conform?] of turtles</metric>
+    <metric>mean [action] of turtles</metric>
+    <metric>conformist-mortality</metric>
+    <metric>contrarian-mortality</metric>
+    <metric>environment</metric>
     <enumeratedValueSet variable="p-transition">
+      <value value="0.01"/>
       <value value="0.25"/>
+      <value value="0.75"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="init-prop?">
       <value value="true"/>
@@ -883,7 +895,12 @@ NetLogo 6.1.1
     <enumeratedValueSet variable="init-prop-conform">
       <value value="1"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="sample-size" first="5" step="5" last="50"/>
+    <enumeratedValueSet variable="sample-size">
+      <value value="25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation">
+      <value value="0.01"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="population">
       <value value="1000"/>
     </enumeratedValueSet>
