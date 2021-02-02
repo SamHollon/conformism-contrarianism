@@ -33,7 +33,7 @@ for (i in unique(TimeData$run.number)) {
     geom_line(aes(y = mean.action), col = "orangered3") +
     geom_line(col = "black") +
     xlab("Time Step") +
-    ylab("Mean Value") +
+    ylab("Value") +
     scale_x_continuous(limits = c(0, 2000), expand = c(0, 0)) +
     scale_y_continuous(limits = c(0, 1), expand = c(0, 0)) +
     scale_fill_gradient(low = "grey99", high = "grey92") +
@@ -51,3 +51,7 @@ for (i in unique(TimeData$run.number)) {
   print(run.plot)
   dev.off()
 }
+
+
+
+# ==== end ====================================================================

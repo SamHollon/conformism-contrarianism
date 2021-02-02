@@ -13,9 +13,6 @@
 TransitionData <- read.csv(paste(PathData,
                                  "ConformByPTransition.csv",
                                  sep = ""))
-TimeData <- read.csv(paste(PathData,
-                           "FullRuns.csv",
-                           sep = ""))
 MortalityData <- read.csv(paste(PathData,
                                 "Mortality.csv",
                                 sep = ""))
@@ -38,16 +35,12 @@ mean.conform.vs.transition <- ggplot(TransitionData,
               col = "black") +
   xlab("Environmental Transition Probability") +
   ylab("Mean Probability of Conformity") +
+  scale_y_continuous(limits = c(0, 1)) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         axis.ticks = element_blank(),
         panel.background = element_rect(fill = "grey99", colour = "grey80"))
 
-# R^2 = 0.8394212.
-cor(TransitionData$mean.p.conform, TransitionData$p.transition)^2
-
-# Regression line equation: y = 0.9181 - 0.8342x
-lm(mean.p.conform ~ p.transition, TransitionData)
 
 # Save scatter plot
 ggsave(paste(PathFigures, "MeanConformVsTransition.png", sep = ""),
@@ -55,6 +48,12 @@ ggsave(paste(PathFigures, "MeanConformVsTransition.png", sep = ""),
 print(mean.conform.vs.transition)
 dev.off()
 
+
+# R^2 = 0.8394212.
+cor(TransitionData$mean.p.conform, TransitionData$p.transition)^2
+
+# Regression line equation: y = 0.9181 - 0.8342x
+lm(mean.p.conform ~ p.transition, TransitionData)
 
 
 # =============================================================================
@@ -106,3 +105,45 @@ print(mort.plot)
 dev.off()
 
 
+# Get mean and standard deviation for each social type for each of the three
+# transition probabilities.
+
+# Conformists at p.transition = 0.01: mean = 0.08259952, sd = 0.002511913.
+mean(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                           tidy.mort$p.transition == 0.01])
+sd(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                           tidy.mort$p.transition == 0.01])
+
+# Contrarians at p.transition = 0.01: mean = 0.156766, sd = 0.001441084.
+mean(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                           tidy.mort$p.transition == 0.01])
+sd(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                         tidy.mort$p.transition == 0.01])
+
+# Conformists at p.transition = 0.25: mean = 0.1192904, sd = 0.0008687777.
+mean(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                           tidy.mort$p.transition == 0.25])
+sd(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                         tidy.mort$p.transition == 0.25])
+
+# Contrarians at p.transition = 0.25: mean = 0.1268624, sd = 0.000903642
+mean(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                           tidy.mort$p.transition == 0.25])
+sd(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                         tidy.mort$p.transition == 0.25])
+
+# Conformists at p.transition = 0.75: mean = 0.1262848, sd = 0.000649301
+mean(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                           tidy.mort$p.transition == 0.75])
+sd(tidy.mort$mortality[tidy.mort$type == "conformist" &
+                         tidy.mort$p.transition == 0.75])
+
+# Contrarians at p.transition = 0.75: mean = 0.1202956, sd = 0.0005298751
+mean(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                           tidy.mort$p.transition == 0.75])
+sd(tidy.mort$mortality[tidy.mort$type == "contrarian" &
+                         tidy.mort$p.transition == 0.75])
+
+
+
+# ==== end ====================================================================
