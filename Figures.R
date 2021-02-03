@@ -54,8 +54,8 @@ mean.conform.vs.transition <- ggplot(TransitionData,
   geom_smooth(method = "loess",
               formula = "y ~ x",
               se = F,
-              col = "black") +
-  geom_point(col = "darkgrey") +
+              col = "darkgrey") +
+  geom_point(col = "black") +
   xlab("Environmental Transition Probability") +
   ylab("Mean Probability of Conformity") +
   scale_y_continuous(limits = c(0, 1)) +
