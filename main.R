@@ -25,16 +25,10 @@ wk.dir <- getwd()
 # ---- libraries ----
 
 # Install libraries needed for the project.
-# install.packages("ggplot2")
-# install.packages("gridExtra")
-###
-###
+install.packages("ggplot2")
 
 # Load the libraries needed for the project to run.
 library(ggplot2)
-library(gridExtra)
-###
-###
 
 
 
@@ -54,13 +48,6 @@ for(i in 1:length(folder.names)){
 # Store the file path to each folder.
 PathData <- paste(wk.dir, "/", folder.names[1], "/", sep = "")
 PathFigures <- paste(wk.dir, "/", folder.names[2], "/", sep = "")
-
-
-
-# =============================================================================
-# --- run scripts ---
-
-source("Functions.R")
 
 
 

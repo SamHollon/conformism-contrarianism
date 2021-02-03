@@ -382,7 +382,7 @@ p-transition
 p-transition
 0
 1
-0.75
+0.99
 0.01
 1
 NIL
@@ -888,6 +888,7 @@ NetLogo 6.1.1
       <value value="0.01"/>
       <value value="0.25"/>
       <value value="0.75"/>
+      <value value="0.99"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="init-prop?">
       <value value="true"/>
