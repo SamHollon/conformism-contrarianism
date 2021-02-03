@@ -104,7 +104,7 @@ mort.plot <- ggplot(tidy.mort, aes(x = type, y = mortality, color = type)) +
   geom_jitter() +
   facet_grid(~ p.transition, labeller = as_labeller(transition.labs)) +
   ylab("Time-Average Mortality Rate") +
-  scale_color_manual(values = c("black", "darkgrey")) +
+  scale_color_manual(values = c("black", "orangered3")) +
   theme_light() +
   theme(panel.grid.minor = element_blank(),
         axis.ticks = element_blank(),
